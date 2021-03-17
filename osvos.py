@@ -17,6 +17,8 @@ import os
 import scipy.misc
 from PIL import Image
 import six
+import imageio
+
 
 slim = tf.contrib.slim
 
@@ -648,7 +650,7 @@ def test(dataset, checkpoint_file, result_path, config=None):
             image = preprocess_img(img[0])
             res = sess.run(probabilities, feed_dict={input_image: image})
             res_np = res.astype(np.float32)[0, :, :, 0] > 162.0/255.0
-            scipy.misc.imsave(os.path.join(result_path, curr_frame), res_np.astype(np.float32))
+            imageio.imwrite(os.path.join(result_path, curr_frame), res_np.astype(np.float32))
             print('Saving ' + os.path.join(result_path, curr_frame))
 
 
